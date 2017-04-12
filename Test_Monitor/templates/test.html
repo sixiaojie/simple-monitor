@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Highcharts Example</title>
+
+		<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+		<style type="text/css">
+${demo.css}
+		</style>
+		<script type="text/javascript">
+$(function () {
+    {% for item,value in data.items %}
+        {% for k,v in value.items %}
+    Highcharts.chart('{{ k }}', {
+        title: {
+            text: '{{ item }}',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: {{ ip }}',
+            x: -20
+        },
+        xAxis: {
+            categories:{{ v.0|safe }}
+        },
+        yAxis: {
+            title: {
+                text: '{{ v.2 }}'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: ''
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: '{{ k }}',
+            data: {{ v.1 }}
+        }]
+    });
+            {% endfor %}
+            {% endfor %}
+});
+		</script>
+	</head>
+	<body>
+<script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+<script src="http://cdn.hcharts.cn/highcharts/modules/exporting.js"></script>
+
+{% for item in service %}
+<div id="{{ item }}" style="min-width: 200px; height: 300px; margin-left: 60px; margin-right: 80px"></div>
+{% endfor %}
+	</body>
+</html>

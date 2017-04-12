@@ -1,0 +1,199 @@
+{% extends "index/index.html" %}
+{% block main %}
+		  <div class="header">
+                        <h1 class="page-header">
+                             Forms Page <small>Best form elements.</small>
+                        </h1>
+						<ol class="breadcrumb">
+					  <li><a href="#">Home</a></li>
+					  <li><a href="#">容器</a></li>
+					  <li class="active">增加容器</li>
+					</ol>
+
+		</div>
+
+            <div id="page-inner">
+              <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            基本信息
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <form role="form" action="/backend/add_container" method="post">
+                                        <div class="form-group">
+                                            <p class="help-block" style="color: red">必写</p>
+                                            <label>容器名</label>
+                                            <input class="form-control" name="Container_name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>主机名</label>
+                                            <input class="form-control" placeholder="Enter text" name="Hostname">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>附件</label>
+                                            <p class="form-control-static">文件添加(不得超过5k)</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>File input</label>
+                                            <input type="file" name="add_file">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>文件描述</label>
+                                            <textarea class="form-control" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <p style="color: red">必写</p>
+                                            <label>网络</label>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="network" id="default" value="option1" checked="">默认
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="network" id="manyhost" value="option2">多主机互联（OVS）
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="network" id="onlyhost" value="option3">单主机（none）
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <h4>端口映射</h4>
+                                        <div class="form-group has-success">
+                                            <label class="control-label" for="inputSuccess">宿主机</label>
+                                            <input type="text" class="form-control" id="inputSuccess" name="master_port">
+                                        </div>
+                                        <div class="form-group has-warning">
+                                            <label class="control-label" for="inputWarning">容器</label>
+                                            <input type="text" class="form-control" id="inputWarning" name="container_port">
+                                        </div>
+                                        <input type="button" value="添加" id="add_port_reflect">
+                                        <div class="form-group">
+                                            <p style="color: red">必写</p>
+                                            <label>选择镜像包（重要！！）</label>
+                                            <select class="form-control" name="images">
+                                                <option>SaltMaster+Minitor</option>
+                                                <option>SaltMaster</option>
+                                                <option>SaltMinion+Minitor</option>
+                                                <option>SaltMinion</option>
+                                                <option>原始包</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <p style="color: red">必写</p>
+                                            <label>选择宿主机</label>
+                                            <select class="form-control" name="master_host">
+                                                <option>*</option>
+                                                <option>自动</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>允许互连的主机</label>
+                                            <select multiple="" class="form-control" name="many_host">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                        <h4>选择容器卷</h4>
+                                        <div class="form-group has-success">
+                                            <label class="control-label" for="inputSuccess">宿主机（也可以其他容器）</label>
+                                            <input type="text" class="form-control" id="inputSuccess" name="master_volumn_data">
+                                        </div>
+                                        <div class="form-group has-warning">
+                                            <label class="control-label" for="inputWarning">容器挂载区</label>
+                                            <input type="text" class="form-control" id="inputWarning" name="container_volumn_data" >
+                                        </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">共享（默认）
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">不共享
+                                                </label>
+                                            </div>
+                                        <div class="form-group">
+                                            <label>创建后是否启动容器</label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" name="startup">是
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="btn btn-default">Submit Button</button>
+
+                                    </form>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                <div class="col-lg-6">
+                                    <h4>*****************注意操作**************</h4>
+                                    <h3 style="color: #c7254e">共享卷</h3>
+                                    <br />
+                                    <form role="form">
+                                        <fieldset disabled="">
+                                            <div class="form-group">
+                                                <label for="disabledSelect">宿主机</label>
+                                                <input class="form-control" id="disabledInput" type="text" placeholder="/ 或者/proc/" disabled="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="disabledSelect">容器</label>
+                                                <select id="disabledSelect" class="form-control">
+                                                    <option>/ 或者/proc/</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                    <h4>端口注意</h4>
+                                    <br />
+                                    <h3 style="color: #c7254e">Insecure Port</h3>
+                                    <br />
+                                    <form role="form">
+                                        <div class="form-group has-warning">
+                                            <label class="control-label" for="inputWarning">宿主机（最好不要将以下端口给容器）</label>
+                                            <input type="text" class="form-control" id="inputWarning" disabled="" placeholder="1~1024">
+                                        </div>
+                                    </form>
+                                    <h4>更多注意事项</h4>
+                                    <form role="form">
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon">*</span>
+                                            <input type="text" class="form-control" disabled="" placeholder="/ 或者/proc/">
+                                            <span class="input-group-addon">.*</span>
+                                        </div>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon">*</span>
+                                            <input type="text" class="form-control" disabled="" placeholder="/ 或者/proc/">
+                                            <span class="input-group-addon">.*</span>
+                                        </div>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon">*</span>
+                                            <input type="text" class="form-control" disabled="" placeholder="/ 或者/proc/">
+                                            <span class="input-group-addon">.*</span>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+			<footer><p>Copyright &copy; 2016.Company name All rights reserved.<a target="_blank" href="http://www.mycodes.net/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p></footer>
+			</div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+{% endblock %}
